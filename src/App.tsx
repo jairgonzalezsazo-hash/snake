@@ -4,7 +4,7 @@ import ConsoleDisplay from "./ConsoleDisplay";
 import display from "./display";
 import Car from "./Car";
 import Engine from "./Engine";
-import Duck from "./Duck";
+// import Duck from "./Duck";
 import Snake from "./Snake";
 import WorldModel from "./WorldModel";
 export default function App() {
