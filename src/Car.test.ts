@@ -1,8 +1,10 @@
 import Car from "./Car";
+import Engine from "./Engine";
 
 const driveCars = (times: number) => {
-  const greenCar = new Car("green");
-  const maroonCar = new Car("maroon");
+  const engine = new Engine(8);
+  const greenCar = new Car("green", engine);
+  const maroonCar = new Car("maroon", engine);
   let totalMiles = 0;
 
   for (let i = 0; i < times; i++) {
@@ -18,8 +20,8 @@ const driveCars = (times: number) => {
 };
 
 describe("Car", () => {
-  const outputElement = document.createElement('div');
-  outputElement.id = 'output';
+  const outputElement = document.createElement("div");
+  outputElement.id = "output";
   document.body.appendChild(outputElement);
   const tests = [0, 3, 10].map((num, index) => driveCars(num));
 
@@ -35,8 +37,6 @@ describe("Car", () => {
     );
   });
 });
-
-
 
 describe("Addition", function () {
   it("sums numbers", () => {

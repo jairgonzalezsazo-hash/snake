@@ -8,9 +8,10 @@ class Car {
   private totalMiles: number;
   private color: string;
   private eng: Engine;
-  constructor(carColor: string) {
+  constructor(carColor: string, e: Engine) {
     this.totalMiles = 0;
     this.color = carColor;
+    this.eng = e;
     this.eng = new Engine(Math.floor(4 * Math.random()));
   }
   drive(miles: number): void {
@@ -20,6 +21,9 @@ class Car {
   }
   public get miles() {
     return this.totalMiles;
+  }
+  public set engine(e: Engine) {
+    this.eng = e;
   }
   public set miles(newTotalMiles: number) {
     if (newTotalMiles >= 0) {

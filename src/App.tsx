@@ -3,14 +3,16 @@ import { useEffect } from "react";
 import ConsoleDisplay from "./ConsoleDisplay";
 import display from "./display";
 import Car from "./Car";
-// import Duck from "./Duck";
+import Engine from "./Engine";
+import Duck from "./Duck";
 import Snake from "./Snake";
-
+import WorldModel from "./WorldModel";
 export default function App() {
   useEffect(() => {
     // Include your display statements to test below
     document.getElementById("output")!.innerText = "OUTPUT:\n";
     display("hey");
+
     const greenSnake = new Snake("green");
     const violetSnake = new Snake("violet");
     greenSnake.move(10);
@@ -20,8 +22,23 @@ export default function App() {
     greenSnake.turn();
     greenSnake.move(12);
     display("Green snake moves forward:", greenSnake.position);
-    const redCar = new Car("red");
-    const blueCar = new Car("blue");
+    const purple = new WorldModel(violetSnake);
+    purple.update(7);
+    const lime = new WorldModel(greenSnake);
+    lime.update(5);
+    display(purple.snake.position);
+    let redCarEngine = new Engine(1);
+    let blueCarEngine = new Engine(2);
+    let coolEngine = new Engine(3);
+    let redCar = new Car("red", redCarEngine);
+    let blueCar = new Car("blue", blueCarEngine);
+    redCar.drive(4);
+    blueCar.drive(10);
+    display("Changing Engines...");
+    redCar.engine = coolEngine;
+    blueCar.engine = redCarEngine;
+    redCar.drive(4);
+    blueCar.drive(10);
     redCar.drive(40);
     blueCar.drive(36);
     redCar.drive(2);

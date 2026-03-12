@@ -6,7 +6,7 @@ class Engine {
     this.engineType = engineType;
   }
 
-  public makeNoise() {
+  public makeNoise(): void {
     if (this.engineType === 0) display("The engine makes no noise.");
     else if (this.engineType === 1) display("The engine goes PUUUURRRR....");
     else if (this.engineType === 2)
