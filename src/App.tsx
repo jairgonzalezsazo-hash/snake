@@ -11,7 +11,7 @@ export default function App() {
   useEffect(() => {
     // Include your display statements to test below
     document.getElementById("output")!.innerText = "OUTPUT:\n";
-    display("hey");
+    display("hi");
 
     const greenSnake = new Snake("green");
     const violetSnake = new Snake("violet");
