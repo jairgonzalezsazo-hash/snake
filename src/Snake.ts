@@ -66,6 +66,9 @@ class Snake {
   public get position(): Point {
     return this.currentPosition;
   }
+  public get direction(): number {
+    return this.currentDirection;
+  }
 }
 
 export default Snake;

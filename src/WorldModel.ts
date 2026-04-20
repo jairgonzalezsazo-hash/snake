@@ -3,12 +3,16 @@ import Snake from "./Snake";
 
 class WorldModel {
   private slither: Snake;
+  private w: number;
+  private h: number;
   /**
    * Create a worldmodel.
    * @param reptile - the world of the WorldModel.
    */
   constructor(reptile: Snake) {
     this.slither = reptile;
+    this.w = 7;
+    this.h = 4;
   }
   /**
    * Updates the worldmodel for given number of steps.
@@ -23,6 +27,12 @@ class WorldModel {
    */
   public get snake(): Snake {
     return this.slither;
+  }
+  public get width(): number {
+    return this.w;
+  }
+  public get height(): number {
+    return this.h;
   }
 }
 
