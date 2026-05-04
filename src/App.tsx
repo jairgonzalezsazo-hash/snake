@@ -6,7 +6,16 @@ import display from "./display";
 // import Engine from "./Engine";
 // import Duck from "./Duck";
 import Snake from "./Snake";
+// import WorldModel from "./WorldModel";
+// import SnakeController from "./SnakeController";
+// import AvoidWallsPlayer from "./AvoidWallsPlayer";
+import CanvasWorldView from "./CanvasWorldView";
+import IWorldView from "./IWorldVeiw";
 import WorldModel from "./WorldModel";
+import IInputHandler from "./IInputHandler";
+import LRKeyInputHandler from "./LRKeyInputHandler";
+import HumanPlayer from "./HumanPlayer";
+import GameController from "./GameController";
 import SnakeController from "./SnakeController";
 import AvoidWallsPlayer from "./AvoidWallsPlayer";
 export default function App() {
@@ -14,72 +23,89 @@ export default function App() {
     // Include your display statements to test below
     document.getElementById("output")!.innerText = "OUTPUT:\n";
     // display("hi");
+    const canvasworldview = new CanvasWorldView(10);
+    const purpleSnake = new Snake("purple");
+    const wm = new WorldModel(purpleSnake);
+    wm.setView(canvasworldview);
+    wm.update(5);
+    const world = new WorldModel(purpleSnake);
 
-    const greenSnake = new Snake("green");
-    const violetSnake = new Snake("violet");
-    greenSnake.move(10);
-    display("Green snake moves forward:");
-    display(
-      "Green snake position:",
-      "x",
-      greenSnake.position.x,
-      "and",
-      "y",
-      greenSnake.position.y,
-    );
-    greenSnake.turnRight();
-    greenSnake.move(5);
-    display("Green snake turns right and moves forward:");
-    display(
-      "Green snake position:",
-      "x",
-      greenSnake.position.x,
-      "and",
-      "y",
-      greenSnake.position.y,
-    );
+    const inputHandler = new LRKeyInputHandler();
+    const sc1 = new SnakeController(world, purpleSnake);
+    const sc2 = new SnakeController(world, purpleSnake);
 
-    violetSnake.move(15);
-    display("Violet snake moves forward:");
-    display(
-      "Violet snake position:",
-      "x",
-      violetSnake.position.x,
-      "and",
-      "y",
-      violetSnake.position.y,
-    );
-    violetSnake.turnLeft();
-    violetSnake.move(6);
-    display("Violet snake turns left and moves forward:");
-    display(
-      "Violet snake position:",
-      "x",
-      violetSnake.position.x,
-      "and",
-      "y",
-      violetSnake.position.y,
-    );
+    const human = new HumanPlayer(sc1, inputHandler);
+    const ai = new AvoidWallsPlayer(sc2);
 
-    const purple = new WorldModel(violetSnake);
-    purple.update(7);
-    display("Purple world width:", purple.width);
-    display("Purple world height:", purple.height);
-    display("Violet snake moves forward in purple world:");
+    const game = new GameController(world);
+    game.setPlayer1(human);
+    game.setPlayer2(ai);
 
-    const lime = new WorldModel(greenSnake);
-    lime.update(5);
-    display("Lime world width:", lime.width);
-    display("Lime world height:", lime.height);
-    display("Green snake moves forward in lime world:");
-    const greenSnakeController = new SnakeController(lime, greenSnake);
-    greenSnakeController.turnSnakeLeft();
-    const violetSnakeController = new SnakeController(purple, violetSnake);
-    violetSnakeController.turnSnakeRight();
-    const aiPlayer = new AvoidWallsPlayer(violetSnakeController);
-    // violetSnake.move(violetSnake.position.y);
-    // display(violetSnake.direction, "direction");
-    aiPlayer.makeTurn();
+    game.run();
+    // const violetSnake = new Snake("violet");
+    // greenSnake.move(10);
+    // display("Green snake moves forward:");
+    // display(
+    //   "Green snake position:",
+    //   "x",
+    //   greenSnake.position.x,
+    //   "and",
+    //   "y",
+    //   greenSnake.position.y,
+    // );
+    // greenSnake.turnRight();
+    // greenSnake.move(5);
+    // display("Green snake turns right and moves forward:");
+    // display(
+    //   "Green snake position:",
+    //   "x",
+    //   greenSnake.position.x,
+    //   "and",
+    //   "y",
+    //   greenSnake.position.y,
+    // );
+
+    // violetSnake.move(15);
+    // display("Violet snake moves forward:");
+    // display(
+    //   "Violet snake position:",
+    //   "x",
+    //   violetSnake.position.x,
+    //   "and",
+    //   "y",
+    //   violetSnake.position.y,
+    // );
+    // violetSnake.turnLeft();
+    // violetSnake.move(6);
+    // display("Violet snake turns left and moves forward:");
+    // display(
+    //   "Violet snake position:",
+    //   "x",
+    //   violetSnake.position.x,
+    //   "and",
+    //   "y",
+    //   violetSnake.position.y,
+    // );
+
+    // const purple = new WorldModel(violetSnake);
+    // purple.update(7);
+    // display("Purple world width:", purple.width);
+    // display("Purple world height:", purple.height);
+    // display("Violet snake moves forward in purple world:");
+
+    // const lime = new WorldModel(greenSnake);
+    // lime.update(5);
+    // display("Lime world width:", lime.width);
+    // display("Lime world height:", lime.height);
+    // display("Green snake moves forward in lime world:");
+    // const greenSnakeController = new SnakeController(lime, greenSnake);
+    // greenSnakeController.turnSnakeLeft();
+    // const violetSnakeController = new SnakeController(purple, violetSnake);
+    // violetSnakeController.turnSnakeRight();
+    // const aiPlayer = new AvoidWallsPlayer(violetSnakeController);
+    // // violetSnake.move(violetSnake.position.y);
+    // // display(violetSnake.direction, "direction");
+    // aiPlayer.makeTurn();
     // display(violetSnake.direction, "direction");
     // let redCarEngine = new Engine(1);
     // let blueCarEngine = new Engine(2);
