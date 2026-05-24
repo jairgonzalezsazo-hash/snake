@@ -1,3 +1,4 @@
+import Point from "./Point";
 import Snake from "./Snake";
 
 /*const moveSnakes = (times: number, turn: boolean = false) => {
@@ -55,61 +56,101 @@ describe("Addition", function () {
 });
 */
 describe("Snake Tests", function () {
-  it("has a working getter for position", function () {
-    let s = new Snake("red");
-    expect(s.position).toBeDefined();
+  test("head position initialized correctly", () => {
+    const snake = new Snake(new Point(5, 5), 3, 2);
+    expect(snake.position.equals(new Point(5, 5))).toBe(true);
   });
-  it("moves correctly", function () {
-    let s1 = new Snake("red");
-    let s2 = new Snake("blue");
-    s1.move(10);
-    s2.move(4);
-    s1.move(5);
-    expect(s1.position.x).toBe(3);
-    expect(s1.position.y).toBe(-13);
-    expect(s2.position.x).toBe(3);
-    expect(s2.position.y).toBe(-2);
-    s1.turnRight();
-    s1.move(5);
-    expect(s1.position.x).toBe(8);
-    expect(s1.position.y).toBe(-13);
-    s1.turnRight();
-    s1.move(2);
-    expect(s1.position.x).toBe(8);
-    expect(s1.position.y).toBe(-11);
-    s1.turnRight();
-    s1.move(8);
-    expect(s1.position.x).toBe(0);
-    expect(s1.position.y).toBe(-11);
-    s1.turnRight();
-    s1.move(3);
-    expect(s1.position.x).toBe(0);
-    expect(s1.position.y).toBe(-14);
-    s2.turnLeft();
-    s2.move(4);
-    expect(s2.position.x).toBe(-1);
-    expect(s2.position.y).toBe(-2);
-    s2.turnLeft();
-    s2.move(7);
-    expect(s2.position.x).toBe(-1);
-    expect(s2.position.y).toBe(5);
-    s2.turnLeft();
-    s2.move(2);
-    expect(s2.position.x).toBe(1);
-    expect(s2.position.y).toBe(5);
-    s2.turnLeft();
-    s2.move(9);
-    expect(s2.position.x).toBe(1);
-    expect(s2.position.y).toBe(-4);
+
+  test("snake creates correct number of parts", () => {
+    const snake = new Snake(new Point(5, 5), 4, 2);
+    expect(snake.allParts.length).toBe(4);
   });
-  it("can be converted to a string with a color", function () {
-    let snakeColor = "orange";
-    let s1 = new Snake(snakeColor);
-    s1.move(3);
-    //expect(s1.toString()).toContain(snakeColor);
+
+  test("snake moves right correctly", () => {
+    const snake = new Snake(new Point(5, 5), 3, 2);
+    snake.move;
+    expect(snake.position.equals(new Point(6, 5))).toBe(true);
   });
-  it("title for next next test", function () {
-    expect(2 + 2).not.toBe(3);
+
+  test("tail follows head correctly", () => {
+    const snake = new Snake(new Point(5, 5), 3, 2);
+    snake.move;
+    expect(snake.allParts[1].equals(new Point(5, 5))).toBe(true);
+    expect(snake.allParts[2].equals(new Point(4, 5))).toBe(true);
   });
+
+  test("snake collides with itself", () => {
+    const snake = new Snake(new Point(5, 5), 2, 2);
+    snake.allParts[0] = new Point(4, 5);
+    expect(snake.didCollide(snake)).toBe(true);
+  });
+
+  test("snake collides with another snake", () => {
+    const snake1 = new Snake(new Point(5, 5), 3, 2);
+    const snake2 = new Snake(new Point(6, 5), 3, 4);
+    expect(snake1.didCollide(snake2)).toBe(true);
+  });
+
+  test("snake does not collide with another snake", () => {
+    const snake1 = new Snake(new Point(1, 1), 3, 2);
+    const snake2 = new Snake(new Point(10, 10), 3, 4);
+    expect(snake1.didCollide(snake2)).toBe(false);
+  });
+  // it("has a working getter for position", function () {
+  //   let s = new Snake("yellow", 7, 4, 4);
+  //   expect(s.position).toBeDefined();
+  // });
+  // it("moves correctly", function () {
+  //   let s1 = new Snake("red", 5, 5, 4);
+  //   let s2 = new Snake("blue", 6, 2, 4);
+  //   s1.move(10);
+  //   s2.move(4);
+  //   s1.move(5);
+  //   expect(s1.position.x).toBe(3);
+  //   expect(s1.position.y).toBe(-13);
+  //   expect(s2.position.x).toBe(3);
+  //   expect(s2.position.y).toBe(-2);
+  //   s1.direction;
+  //   s1.move(5);
+  //   expect(s1.position.x).toBe(8);
+  //   expect(s1.position.y).toBe(-13);
+  //   s1.direction;
+  //   s1.move(2);
+  //   expect(s1.position.x).toBe(8);
+  //   expect(s1.position.y).toBe(-11);
+  //   s1.direction;
+  //   s1.move(8);
+  //   expect(s1.position.x).toBe(0);
+  //   expect(s1.position.y).toBe(-11);
+  //   s1.direction;
+  //   s1.move(3);
+  //   expect(s1.position.x).toBe(0);
+  //   expect(s1.position.y).toBe(-14);
+  //   s2.direction;
+  //   s2.move(4);
+  //   expect(s2.position.x).toBe(-1);
+  //   expect(s2.position.y).toBe(-2);
+  //   s2.direction;
+  //   s2.move(7);
+  //   expect(s2.position.x).toBe(-1);
+  //   expect(s2.position.y).toBe(5);
+  //   s2.direction;
+  //   s2.move(2);
+  //   expect(s2.position.x).toBe(1);
+  //   expect(s2.position.y).toBe(5);
+  //   s2.direction;
+  //   s2.move(9);
+  //   expect(s2.position.x).toBe(1);
+  //   expect(s2.position.y).toBe(-4);
+  // });
+  // it("can be converted to a string with a color", function () {
+  //   let snakeColor = "orange";
+  //   let s1 = new Snake("orange", 2, 3);
+  //   s1.move(3);
+  //   //expect(s1.toString()).toContain(snakeColor);
+  // });
+  // it("title for next next test", function () {
+  //   expect(2 + 2).not.toBe(3);
+  // });
 });
 export {};

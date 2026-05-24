@@ -15,7 +15,6 @@ class CanvasWorldView implements IWorldView {
   display(world: WorldModel): void {
     this.worldCanvas.width = world.width * this.scalingFactor;
     this.worldCanvas.height = world.height * this.scalingFactor;
-
     this.context.clearRect(
       0,
       0,
@@ -23,7 +22,18 @@ class CanvasWorldView implements IWorldView {
       this.worldCanvas.height,
     );
     this.context.fillStyle = "green";
+
     this.context.fillRect(0, 0, this.scalingFactor, this.scalingFactor);
+    for (let snake of world.allSnakes) {
+      for (let part of snake.allParts) {
+        this.context.fillRect(
+          part.x * this.scalingFactor,
+          part.y * this.scalingFactor,
+          this.scalingFactor,
+          this.scalingFactor,
+        );
+      }
+    }
   }
 }
 export default CanvasWorldView;

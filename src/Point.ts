@@ -11,6 +11,9 @@ class Point {
     this.xcoord = x;
     this.ycoord = y;
   }
+  equals(p: Point): boolean {
+    return this.x === p.x && this.y === p.y;
+  }
   /**
    * the x coord for the point.
    */

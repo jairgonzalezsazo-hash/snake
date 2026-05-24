@@ -18,30 +18,32 @@ import HumanPlayer from "./HumanPlayer";
 import GameController from "./GameController";
 import SnakeController from "./SnakeController";
 import AvoidWallsPlayer from "./AvoidWallsPlayer";
+import Point from "./Point";
 export default function App() {
   useEffect(() => {
     // Include your display statements to test below
     document.getElementById("output")!.innerText = "OUTPUT:\n";
     // display("hi");
     const canvasworldview = new CanvasWorldView(10);
-    const purpleSnake = new Snake("purple");
-    const wm = new WorldModel(purpleSnake);
-    wm.setView(canvasworldview);
+    const purpleSnake = new Snake("purple", new Point(3, 2), 4);
+    const wm = new WorldModel();
+    wm.addSnake(purpleSnake);
+    wm.addView(canvasworldview);
     wm.update(5);
-    const world = new WorldModel(purpleSnake);
+    // const world = new WorldModel();
 
-    const inputHandler = new LRKeyInputHandler();
-    const sc1 = new SnakeController(world, purpleSnake);
-    const sc2 = new SnakeController(world, purpleSnake);
+    // const inputHandler = new LRKeyInputHandler();
+    // const sc1 = new SnakeController(world, purpleSnake);
+    // const sc2 = new SnakeController(world, purpleSnake);
 
-    const human = new HumanPlayer(sc1, inputHandler);
-    const ai = new AvoidWallsPlayer(sc2);
+    // const human = new HumanPlayer(sc1, inputHandler);
+    // const ai = new AvoidWallsPlayer(sc2);
 
-    const game = new GameController(world);
-    game.setPlayer1(human);
-    game.setPlayer2(ai);
+    // const game = new GameController(world);
+    // game.setPlayer1(human);
+    // game.setPlayer2(ai);
 
-    game.run();
+    // game.run();
     // const violetSnake = new Snake("violet");
     // greenSnake.move(10);
     // display("Green snake moves forward:");

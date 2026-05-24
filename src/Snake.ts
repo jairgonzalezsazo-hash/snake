@@ -4,67 +4,69 @@ import Point from "./Point";
 /** Class representing a snake. */
 
 class Snake {
-  private currentPosition: Point;
+  private currentParts: Point[];
   private currentDirection: number;
   private color: string;
   /**
    * Create a snake.
    * @param snakeColor - The color of the Snake.
    */
-  constructor(snakeColor: string) {
-    // 1 is up, 2 is right, 3 is down, 4 is left
+  constructor(snakeColor: string, startPosition: Point, size: number) {
     this.color = snakeColor;
-    this.currentPosition = new Point(3, 2);
     this.currentDirection = 1;
+    this.currentParts = [startPosition];
+
+    this.currentParts.push(startPosition);
+
+    for (let i = 1; i < size; i++) {
+      this.currentParts.push(new Point(startPosition.x - i, startPosition.y));
+    }
   }
   /**
    * Moves the snake for the given number of squares.
    * @param squares - The number of squares to move the Snake.
    */
   move(squares: number): void {
-    if (this.currentDirection === 1)
-      this.currentPosition = new Point(
-        this.currentPosition.x,
-        this.currentPosition.y - squares,
-      );
-    else if (this.currentDirection === 2)
-      this.currentPosition = new Point(
-        this.currentPosition.x + squares,
-        this.currentPosition.y,
-      );
-    else if (this.currentDirection === 3)
-      this.currentPosition = new Point(
-        this.currentPosition.x,
-        this.currentPosition.y + squares,
-      );
-    else
-      this.currentPosition = new Point(
-        this.currentPosition.x - squares,
-        this.currentPosition.y,
-      );
+    for (let i = this.currentParts.length - 1; i >= 1; i--) {
+      this.currentParts[i] = this.currentParts[i - 1];
+    }
+
+    let head = this.currentParts[0];
+    // 1 is up, 2 is right, 3 is down, 4 is left
+    switch (this.currentDirection) {
+      case 1: // up
+        this.currentParts[0] = new Point(head.x, head.y - 1);
+        break;
+      case 2: // right
+        this.currentParts[0] = new Point(head.x + 1, head.y);
+        break;
+      case 3: // down
+        this.currentParts[0] = new Point(head.x, head.y + 1);
+        break;
+      case 4: // left
+        this.currentParts[0] = new Point(head.x - 1, head.y);
+        break;
+    }
   }
-  turn(): void {
-    if (this.currentDirection === 1) this.currentDirection = -1;
-    else this.currentDirection = 1;
-  }
-  turnLeft(): void {
-    if (this.currentDirection === 1) this.currentDirection = 4;
-    else if (this.currentDirection === 2) this.currentDirection = 1;
-    else if (this.currentDirection === 3) this.currentDirection = 2;
-    else this.currentDirection = 3;
-  }
-  turnRight(): void {
-    if (this.currentDirection === 1) this.currentDirection = 2;
-    else if (this.currentDirection === 2) this.currentDirection = 3;
-    else if (this.currentDirection === 3) this.currentDirection = 4;
-    else this.currentDirection = 1;
-  }
+
   /**
    * Produces string repesentation of Point
    * @return string repesentation of Point
    */
+  public didCollide(s: Snake): boolean {
+    let partsToCheck = this === s ? s.allParts.slice(1) : s.allParts;
+    for (let p of partsToCheck) {
+      if (this.position.equals(p)) {
+        return true;
+      }
+    }
+    return false;
+  }
   public get position(): Point {
-    return this.currentPosition;
+    return this.currentParts[0];
+  }
+  public get allParts(): Point[] {
+    return this.currentParts;
   }
   public get direction(): number {
     return this.currentDirection;
